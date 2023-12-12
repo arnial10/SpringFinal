@@ -4,10 +4,7 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 
 
-/**
- * The persistent class for the contact database table.
- * 
- */
+
 @Entity(name = "Contact")
 @Table(name = "contact")
 @NamedQuery(name="Contact.findAll", query="SELECT c FROM Contact c")

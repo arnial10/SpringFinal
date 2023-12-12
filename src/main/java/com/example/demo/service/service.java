@@ -25,5 +25,23 @@ public class service {
     public List<Contacts> obtenerContact() {
         return productoDAO.obtenerContact();
     }
+    public void insertarProducto(Products producto) {
+        productoDAO.insertarProducto(producto);
+    }
+
+    public void actualizarProducto(Products producto) {
+        productoDAO.actualizarProducto(producto);
+    }
     
+    public void eliminarProducto(Long productId) {
+        productoDAO.eliminarProducto(productId);
+    }
+    
+    public List<Products> obtenerTodosLosProductosPrecioSuperiorOIgualA5() {
+        return productoDAO.obtenerTodosLosProductosPrecioSuperiorOIgualA5();
+    }
+    public List<Products> obtenerTodosLosProductosPrecioInferiorA5() {
+        return productoDAO.obtenerTodosLosProductosPrecioInferiorA5();
+    }
+
 }
