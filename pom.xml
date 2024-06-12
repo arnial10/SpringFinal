@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>FrutaFacil</artifactId>
+	<artifactId>Minimalist</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>FrutaFacil</name>
+	<name>Minimalist</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
@@ -47,6 +47,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+		<groupId>org.mindrot</groupId>
+		<artifactId>jbcrypt</artifactId>
+		<version>0.4</version>
+		</dependency>		
 	</dependencies>
 
 

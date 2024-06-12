@@ -3,8 +3,11 @@ package com.example.demo.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import java.util.List;
+
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
 import com.example.demo.AboutUss;
 import com.example.demo.Contacts;
@@ -29,10 +32,12 @@ public class Dao {
     public void agregarProducto(Products producto) {
         entityManager.persist(producto);
     }
+    
     @Transactional
     public void addUsers(Users users) {
         entityManager.persist(users);
     }
+    
     @Transactional
     public void insertarProducto(Products producto) {
         entityManager.persist(producto);
@@ -71,16 +76,27 @@ public class Dao {
     public List<Users> obtenerTodosLosUsersBaja() {
         return entityManager.createQuery("SELECT u FROM Users u WHERE u.baja = true", Users.class).getResultList();
     }
+    
     public Users buscarUsuarioPorNombreYContraseña(String nombre, String contraseña) {
         try {
-            return entityManager.createQuery("SELECT u FROM Users u WHERE u.name = :name AND u.password = :password", Users.class)
-                    .setParameter("name", nombre)
-                    .setParameter("password", contraseña)
-                    .getSingleResult();
+            TypedQuery<Users> query = entityManager.createQuery(
+                    "SELECT u FROM Users u WHERE u.name = :name", Users.class);
+            query.setParameter("name", nombre);
+            Users user = query.getSingleResult();
+
+            if (user != null && BCrypt.checkpw(contraseña, user.getPassword())) {
+                return user;
+            } else {
+                return null;
+            }
         } catch (NoResultException e) {
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
+    
         @Transactional
         public void cambiarContraseña(int userId, String nuevaContraseña) {
             Users user = entityManager.find(Users.class, userId);

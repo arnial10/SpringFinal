@@ -1,5 +1,6 @@
 package com.example.demo.service;
  
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
  
@@ -30,11 +31,23 @@ public class ProductService {
     public void insertarProducto(Products producto) {
         dao.insertarProducto(producto);
     }
+    //Registrarse
     public void addUsers(Users users) {
-        dao.addUsers(users);
+    	String originalPassword = users.getPassword(); 
+        String hashedPassword = hashPassword(originalPassword); 
+        users.setPassword(hashedPassword); 
+        
+        System.out.println("Original Password: " + originalPassword);
+        System.out.println("Hashed Password: " + hashedPassword);
+        
+        dao.addUsers(users); 
     }
- 
-    public void actualizarProducto(Products producto) {
+    //Metodo para encriptar contraseña
+    private String hashPassword(String originalPassword) {
+    	return BCrypt.hashpw(originalPassword, BCrypt.gensalt());
+	}
+    
+	public void actualizarProducto(Products producto) {
         dao.actualizarProducto(producto);
     }
     public void actualizarUser(Users users, int id) {
@@ -49,10 +62,14 @@ public class ProductService {
     public List<Users> obtenerTodosLosUsersBaja() {
         return dao.obtenerTodosLosUsersBaja();
     }
+    
+    
+    //Iniciar Sesión
     public Users buscarUsuarioPorNombreYContraseña(String nombre, String contraseña) {
-        return dao.buscarUsuarioPorNombreYContraseña(nombre, contraseña);
+    	return dao.buscarUsuarioPorNombreYContraseña(nombre, contraseña);
     }
-    public Users buscarUsuarioPorNombre(String currentUserName) {
+    
+	public Users buscarUsuarioPorNombre(String currentUserName) {
         // Implementación
         return null;
     }
