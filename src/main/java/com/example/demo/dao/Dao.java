@@ -1,6 +1,7 @@
 package com.example.demo.dao;
  
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -47,15 +48,29 @@ public class Dao {
     public void actualizarProducto(Products producto) {
         entityManager.merge(producto);
     }
+    
     @Transactional
-    public void actualizarUserById(Users users, int userId) {
-        Users user = entityManager.find(Users.class, userId);
+    public void actualizarUser(int userId, String hashedPassword) {
+    	//EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            
+            Users user = entityManager.find(Users.class, userId);
+            if (user != null) {
+                user.setPassword(hashedPassword);
+                entityManager.merge(user);
+            }
+            
+        } catch (Exception e) {
+          
+            e.printStackTrace();
+        }
+       /* Users user = entityManager.find(Users.class, userId);
         if (user != null) {
             user.setPassword(users.getPassword());
             entityManager.merge(user); // Asegúrate de hacer merge después de actualizar los datos
         } else {
             throw new IllegalArgumentException("El usuario con ID " + userId + " no se encontró en la base de datos");
-        }
+        }*/
     }
 
  
@@ -97,14 +112,22 @@ public class Dao {
         }
     }
     
-        @Transactional
-        public void cambiarContraseña(int userId, String nuevaContraseña) {
-            Users user = entityManager.find(Users.class, userId);
-            System.out.println(user);
-            if (user != null) {
-                user.setPassword(nuevaContraseña);
-            } else {
-                throw new IllegalArgumentException("El usuario con ID " + userId + " no se encontró en la base de datos");
-            }
-    }
+       /*@Transactional
+        public void cambiarContraseña(int userId, String hashedPassword) {
+        	 EntityTransaction transaction = entityManager.getTransaction();
+             try {
+                 transaction.begin();
+                 Users user = entityManager.find(Users.class, userId);
+                 if (user != null) {
+                     user.setPassword(hashedPassword);
+                     entityManager.merge(user);
+                 }
+                 transaction.commit();
+             } catch (Exception e) {
+                 if (transaction.isActive()) {
+                     transaction.rollback();
+                 }
+                 e.printStackTrace();
+             }
+        }*/
 }

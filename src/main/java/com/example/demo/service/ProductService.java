@@ -50,9 +50,13 @@ public class ProductService {
 	public void actualizarProducto(Products producto) {
         dao.actualizarProducto(producto);
     }
-    public void actualizarUser(Users users, int id) {
-        dao.actualizarUserById(users, id);
+	
+    public void actualizarUser(Users user, int userId) {
+    	String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+        dao.actualizarUser(userId, hashedPassword);
+        
     }
+    
     public void eliminarProducto(Long productId) {
         dao.eliminarProducto(productId);
     }
@@ -73,8 +77,11 @@ public class ProductService {
         // Implementación
         return null;
     }
+	
+	
     // Nuevo método para cambiar la contraseña
-    public void cambiarContraseña(int userId, String nuevaContraseña) {
-        dao.cambiarContraseña(userId, nuevaContraseña);
-    }
+    /*public void cambiarContraseña(int userId, String nuevaContraseña) {
+    	String hashedPassword = BCrypt.hashpw(nuevaContraseña, BCrypt.gensalt());
+        dao.cambiarContraseña(userId, hashedPassword);
+    }*/
 }

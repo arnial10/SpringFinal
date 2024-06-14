@@ -51,14 +51,15 @@ public class Controller {
     }
  
     @PutMapping(value = "/users/update/{usersId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> actualizarUser(@RequestBody Users users, @PathVariable int usersId) {
-        productService.actualizarUser(users, usersId); // Cambia el método aquí
+    public ResponseEntity<String> actualizarUser(@RequestBody Users user, @PathVariable int usersId) {
+        productService.actualizarUser(user, usersId);
+        System.out.println(user);
         return ResponseEntity.ok("Usuario actualizado exitosamente.");
     }
 
  
     // Cambiar contraseña de usuario
-    @PutMapping(value = "/users/change-password/{userId}", consumes = MediaType.TEXT_PLAIN_VALUE)
+    /*@PutMapping(value = "/users/change-password/{userId}", consumes = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> cambiarContraseña(@PathVariable int userId, @RequestBody String nuevaContraseña) {
         try {
             productService.cambiarContraseña(userId, nuevaContraseña);
@@ -66,7 +67,7 @@ public class Controller {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-    }
+    }*/
  
     @DeleteMapping(value = "/products/delete/{productId}")
     public ResponseEntity<String> eliminarProducto(@PathVariable Long productId) {
