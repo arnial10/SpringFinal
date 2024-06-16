@@ -47,6 +47,10 @@ public class ProductService {
     	return BCrypt.hashpw(originalPassword, BCrypt.gensalt());
 	}
     
+    public List<Products> encontrarProducto(Long id) {
+		return dao.encontrarProducto(id);
+    }
+    
 	public void actualizarProducto(Products producto) {
         dao.actualizarProducto(producto);
     }
@@ -54,6 +58,7 @@ public class ProductService {
     public void actualizarUser(Users user, int userId) {
     	String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
         dao.actualizarUser(userId, hashedPassword);
+        System.out.println("Contraseña actualizada: " + hashedPassword);
         
     }
     
@@ -66,7 +71,6 @@ public class ProductService {
     public List<Users> obtenerTodosLosUsersBaja() {
         return dao.obtenerTodosLosUsersBaja();
     }
-    
     
     //Iniciar Sesión
     public Users buscarUsuarioPorNombreYContraseña(String nombre, String contraseña) {

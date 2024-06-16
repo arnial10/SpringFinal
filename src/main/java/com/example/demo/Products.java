@@ -21,9 +21,17 @@ public class Products implements Serializable {
     private BigDecimal price;
     
     private String category;
-    
+    private String imageURL;
    
 
+    public String getImageURL() {
+		return imageURL;
+	}
+
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
+	
     public Products() {
     }
 

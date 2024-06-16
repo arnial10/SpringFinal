@@ -22,7 +22,7 @@ public class Dao {
         return entityManager.createQuery("SELECT p FROM Products p", Products.class).getResultList();
     }
     public List<Users> obtenerTodosLosUsers() {
-        return entityManager.createQuery("SELECT u FROM Users u ", Users.class).getResultList();
+        return entityManager.createQuery("SELECT u FROM Users u", Users.class).getResultList();
     }
     public List<AboutUss> obtenerAboutUs() {
         return entityManager.createQuery("SELECT p FROM About_us p", AboutUss.class).getResultList();
@@ -32,6 +32,9 @@ public class Dao {
     }
     public void agregarProducto(Products producto) {
         entityManager.persist(producto);
+    }
+    public List<Products> encontrarProducto(Long id) {
+    	return entityManager.createQuery("SELECT p FROM Products p WHERE id_Products = " + id, Products.class).getResultList();
     }
     
     @Transactional

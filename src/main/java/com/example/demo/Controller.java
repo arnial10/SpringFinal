@@ -74,6 +74,10 @@ public class Controller {
         productService.eliminarProducto(productId);
         return ResponseEntity.ok("Producto eliminado exitosamente.");
     }
+    @GetMapping(value = "/products/{productId}")
+    public List<Products> encontrarProducto(@PathVariable Long productId) {
+        return productService.encontrarProducto(productId);
+    }
  
     @DeleteMapping(value = "/users/delete/{userId}")
     public ResponseEntity<String> eliminarUsers(@PathVariable Long userId) {
